@@ -14,88 +14,92 @@ try {
 
 ?>
 <?php
-            function url_param_change($par = array(), $op = 0)
-            {
-                $url = parse_url($_SERVER["REQUEST_URI"]);
-                if (isset($url["query"]))
-                    parse_str($url["query"], $query);
-                else
-                    $query = array();
-                foreach ($par as $key => $value) {
-                    if ($key && is_null($value))
-                        unset($query[$key]);
-                    else
-                        $query[$key] = $value;
-                }
-                $query = str_replace("=&", "&", http_build_query($query));
-                $query = preg_replace("/=$/", "", $query);
-                return $query ? (!$op ? "?" : "") . htmlspecialchars($query, ENT_QUOTES) : "";
-            }
+function url_param_change($par = array(), $op = 0)
+{
+    $url = parse_url($_SERVER["REQUEST_URI"]);
+    if (isset($url["query"]))
+        parse_str($url["query"], $query);
+    else
+        $query = array();
+    foreach ($par as $key => $value) {
+        if ($key && is_null($value))
+            unset($query[$key]);
+        else
+            $query[$key] = $value;
+    }
+    $query = str_replace("=&", "&", http_build_query($query));
+    $query = preg_replace("/=$/", "", $query);
+    return $query ? (!$op ? "?" : "") . htmlspecialchars($query, ENT_QUOTES) : "";
+}
 
-            function delete_query($genre)
-            {
-                $do = url_param_change(array($genre => null));
-                $return = 'location.href=\'index.php' . $do . '\'';
-                return $return;
-            }
+function delete_query($genre)
+{
+    $do = url_param_change(array($genre => null));
+    $return = 'location.href=\'index.php' . $do . '\'';
+    return $return;
+}
 
-            $genre_arr = array('cpu', 'cpuc', 'ram', 'mb', 'gpu', 'ssd', 'ssd2', 'hdd', 'psu', 'pccase', 'os');
-            $genre_name_arr = array('CPU', 'CPUクーラー', 'メモリ', 'マザー', 'GPU', 'メインSSD', 'サブSSD', 'HDD', '電源', 'ケース', 'OS');
-            $allUrl = $_SERVER['REQUEST_URI'];
-            $query = NULL;
-            $header_totalPrice = 0;
-            $header_flag = false;
+$genre_arr = array('cpu', 'cpuc', 'ram', 'mb', 'gpu', 'ssd', 'ssd2', 'hdd', 'psu', 'pccase', 'os');
+$genre_name_arr = array('CPU', 'CPUクーラー', 'メモリ', 'マザー', 'GPU', 'メインSSD', 'サブSSD', 'HDD', '電源', 'ケース', 'OS');
+$allUrl = $_SERVER['REQUEST_URI'];
+$query = NULL;
+$header_totalPrice = 0;
+$header_flag = false;
 
-            if (strpos($allUrl, "?")) {
-                $temp = explode("?", $allUrl);
-                $query = $temp[1];
-            }
-            for ($i = 0; $i < count($genre_arr); $i++) {
+if (strpos($allUrl, "?")) {
+    $temp = explode("?", $allUrl);
+    $query = $temp[1];
+}
+for ($i = 0; $i < count($genre_arr); $i++) {
 
-            
-            if (isset($_GET[$genre_arr[$i]])) {
-                $header_flag = true;
-                $name = NULL;
-                $url = NULL;
-                //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
-                $price = NULL;
-                $id = filter_input(INPUT_GET, $genre_arr[$i]);
-                if($genre_arr[$i]=="ssd2")//ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
-                        {$genre_arr_i = "ssd";} else {$genre_arr_i=$genre_arr[$i];}
-                $sql = "SELECT * FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
-                $sqlQuery = $db->query($sql);
-                $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
-                $changeUrlTemp = $genre_arr[$i] . '.php?';
-                $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
-                $changeUrlTemp = "'" . $changeUrlTemp;
-                $urlQueryTemp = $query . "'";
 
-                //foreach($things as $test){echo($test);}
-                switch ($genre_arr[$i]) {
-                    case "cpu":
-                        $header_parts_description .= "CPU:" . $things['name'] . " - ";
-                        $header_totalPrice += $things['price'];
-                        break;
-                    case "ram":
-                        $header_parts_description .= "RAM:" . $things['gen'] . " " . $things['ram_value'] . "GB - ";
-                        $header_totalPrice += $things['price'];
-                        break;
-                    case "gpu":
-                        $header_parts_description .= "GPU:". $things['chip'];
-                        $header_totalPrice += $things['price'];
-                        break;
-                    default:
-                        $header_totalPrice += $things['price'];
-                    }
+    if (isset($_GET[$genre_arr[$i]])) {
+        $header_flag = true;
+        $name = NULL;
+        $url = NULL;
+        //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
+        $price = NULL;
+        $id = filter_input(INPUT_GET, $genre_arr[$i]);
+        if ($genre_arr[$i] == "ssd2") //ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
+        {
+            $genre_arr_i = "ssd";
+        } else {
+            $genre_arr_i = $genre_arr[$i];
+        }
+        $sql = "SELECT * FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
+        $sqlQuery = $db->query($sql);
+        $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+        $changeUrlTemp = $genre_arr[$i] . '.php?';
+        $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
+        $changeUrlTemp = "'" . $changeUrlTemp;
+        $urlQueryTemp = $query . "'";
 
-                }
-                
-            }
-            if($header_flag){
-            $header_description = $header_parts_description . "-----" . $header_totalPrice ."円";
-            }else{$header_description = "簡単に自作パソコン見積もれるやつ";}
+        //foreach($things as $test){echo($test);}
+        switch ($genre_arr[$i]) {
+            case "cpu":
+                $header_parts_description .= "CPU:" . $things['name'] . " - ";
+                $header_totalPrice += $things['price'];
+                break;
+            case "ram":
+                $header_parts_description .= "RAM:" . $things['gen'] . " " . $things['ram_value'] . "GB - ";
+                $header_totalPrice += $things['price'];
+                break;
+            case "gpu":
+                $header_parts_description .= "GPU:" . $things['chip'];
+                $header_totalPrice += $things['price'];
+                break;
+            default:
+                $header_totalPrice += $things['price'];
+        }
+    }
+}
+if ($header_flag) {
+    $header_description = $header_parts_description . "-----" . $header_totalPrice . "円";
+} else {
+    $header_description = "簡単に自作パソコン見積もれるやつ";
+}
 
-            echo <<<default_str
+echo <<<default_str
             <!DOCTYPE html>
             <html lang="ja">
 
@@ -213,71 +217,72 @@ try {
                     </thead>
                     <tbody>
             default_str;
-            try {
-                for ($i = 0; $i < count($genre_arr); $i++) {
-                    //echo(isset($_GET[$genre_arr[$i]]));
-                    if (isset($_GET[$genre_arr[$i]])) {
-                        $name = NULL;
-                        $url = NULL;
-                        //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
-                        $price = NULL;
-                        $id = filter_input(INPUT_GET, $genre_arr[$i]);
-                        if($genre_arr[$i]=="ssd2")//ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
-                        {
-                            $genre_arr_i = "ssd";
-                        }else{$genre_arr_i=$genre_arr[$i];}
-
-                        $sql = "SELECT id,url,name,price FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
-                        $sqlQuery = $db->query($sql);
-                        $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
-                        $changeUrlTemp = $genre_arr[$i] . '.php?';
-                        $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
-                        $changeUrlTemp = "'" . $changeUrlTemp;
-                        $urlQueryTemp = $query . "'";
-
-                        //foreach($things as $test){echo($test);}
-                        if ($things) {
-                            //echo("cpu true");
-                            $name = $things['name'];
-                            $url = $things['url'];
-                            $price = $things['price'];
-                        }
-
-                        echo ('<tr class = "' . $genre_arr[$i] . '">');
-                        echo ('<td id=genre>' . $genre_name_arr[$i] . '</td>');
-
-                        if (isset($query)) {
-                            echo ('<td><button onclick = "location.href=' . $changeUrlTemp . $urlQueryTemp . '" class="btn btn-outline-primary">変更</button></td>');
-                        } else {
-                            echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php" class="btn btn-outline-primary">変更</button></td>');
-                        }
-                        echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
-
-
-                        echo ('<td id="name"><a href =' . $url . ' target="_blank" rel="noopener noreferrer">' . $name . '</td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">' . $price . '</td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-'. $i .'" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
-
-                    } else {
-                        echo ('<tr class = "' . $genre_arr[$i] . '">');
-                        echo ('<td id=genre>' . $genre_arr[$i] . '</td>');
-                        if (isset($query)) {
-                            echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php?' . $query . '\'" class="btn btn-outline-primary">変更</button></td>');
-                        } else {
-                            echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php\'" class="btn btn-outline-primary">変更</button></td>');
-                        }
-                        echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
-                        echo ('<td id="name"><a href = ></td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">0</td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-'. $i .'" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
-                        echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
-                    }
-                }
-            } catch (Exception $e) {
-                echo ($e);
+try {
+    for ($i = 0; $i < count($genre_arr); $i++) {
+        //echo(isset($_GET[$genre_arr[$i]]));
+        if (isset($_GET[$genre_arr[$i]])) {
+            $name = NULL;
+            $url = NULL;
+            //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
+            $price = NULL;
+            $id = filter_input(INPUT_GET, $genre_arr[$i]);
+            if ($genre_arr[$i] == "ssd2") //ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
+            {
+                $genre_arr_i = "ssd";
+            } else {
+                $genre_arr_i = $genre_arr[$i];
             }
-            /*
+
+            $sql = "SELECT id,url,name,price FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
+            $sqlQuery = $db->query($sql);
+            $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+            $changeUrlTemp = $genre_arr[$i] . '.php?';
+            $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
+            $changeUrlTemp = "'" . $changeUrlTemp;
+            $urlQueryTemp = $query . "'";
+
+            //foreach($things as $test){echo($test);}
+            if ($things) {
+                //echo("cpu true");
+                $name = $things['name'];
+                $url = $things['url'];
+                $price = $things['price'];
+            }
+
+            echo ('<tr class = "' . $genre_arr[$i] . '">');
+            echo ('<td id=genre>' . $genre_name_arr[$i] . '</td>');
+
+            if (isset($query)) {
+                echo ('<td><button onclick = "location.href=' . $changeUrlTemp . $urlQueryTemp . '" class="btn btn-outline-primary">変更</button></td>');
+            } else {
+                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php" class="btn btn-outline-primary">変更</button></td>');
+            }
+            echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
+
+
+            echo ('<td id="name"><a href =' . $url . ' target="_blank" rel="noopener noreferrer">' . $name . '</td>');
+            echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">' . $price . '</td>');
+            echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-' . $i . '" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
+            echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
+        } else {
+            echo ('<tr class = "' . $genre_arr[$i] . '">');
+            echo ('<td id=genre>' . $genre_name_arr[$i] . '</td>');
+            if (isset($query)) {
+                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php?' . $query . '\'" class="btn btn-outline-primary">変更</button></td>');
+            } else {
+                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php\'" class="btn btn-outline-primary">変更</button></td>');
+            }
+            echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
+            echo ('<td id="name"><a href = ></td>');
+            echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">0</td>');
+            echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-' . $i . '" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
+            echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
+        }
+    }
+} catch (Exception $e) {
+    echo ($e);
+}
+/*
             if(isset($_GET['cpuc']))
                 {
                     $cpuc_name=NULL;
@@ -770,74 +775,77 @@ try {
                     echo('<td id="osprice2" class="price"></td>'); 
                 }
             */
-            ?>
-            <script>
-                jQuery(function ($) {
-                    total();
-                    $('#noti_frame')[0].contentDocument.location.reload(true);
-                    $('.form-control').change(function () {
-                        total();
-                    });
+?>
+<script>
+    jQuery(function($) {
+        total();
+        $('#noti_frame')[0].contentDocument.location.reload(true);
+        $('.form-control').change(function() {
+            total();
+        });
 
-                    function total() {
-                        console.log("kugiri");
-                        var content, content_out, selector, Fprice, sum, Ptotal;
-                        var temp, temp2, total;
-                        var genre = ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
-                        for (let i = 0; i < 11; i++) {
-
-
-                            temp = $("#" + genre[i] + "price1").text();
-                            //console.log(temp);
-                            if (!isNaN(temp)) {
-                                temp = "¥" + Number(temp).toLocaleString();
-                                //console.log(temp);
-                                $("#" + genre[i] + "price1").text(temp);
-                            }
+        function total() {
+            console.log("kugiri");
+            var content, content_out, selector, Fprice, sum, Ptotal;
+            var temp, temp2, total;
+            var genre = ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
+            for (let i = 0; i < 11; i++) {
 
 
-                            if (i === 0) { total = 0; console.log("initialization"); };
-
-                            //各種値取得(上が小計、下個数)
-                            content = $("#" + genre[i] + "price1").text();
-                            sum = $("#select-" + [i]).val();
-                            console.log(genre[i]);
-                            //selector="#"+genre[i]+"price1";
-                            //temp=$("#select-"+[i+1]);
-                            console.log("content:" + content);
-                            //console.log(temp);
-                            console.log("sel:" + sum);
+                temp = $("#" + genre[i] + "price1").text();
+                //console.log(temp);
+                if (!isNaN(temp)) {
+                    temp = "¥" + Number(temp).toLocaleString();
+                    //console.log(temp);
+                    $("#" + genre[i] + "price1").text(temp);
+                }
 
 
+                if (i === 0) {
+                    total = 0;
+                    console.log("initialization");
+                };
 
-                            //値変換(価格の値に含まれた不要なものを排除してint化)→後計算
-                            Fprice = content.replace("¥", "");
-                            Fprice = Fprice.replace(",", "");
-                            Fprice = Fprice.replace(" ", "");
-                            Fprice = Number(Fprice);
-                            Ptotal = Fprice * Number(sum);
-                            console.log(content+" selector:"+selector);
-                            console.log("Fprice:" + typeof Fprice);
-                            console.log(genre[i], Fprice, Ptotal, Number(sum));//デバッグ
+                //各種値取得(上が小計、下個数)
+                content = $("#" + genre[i] + "price1").text();
+                sum = $("#select-" + [i]).val();
+                console.log(genre[i]);
+                //selector="#"+genre[i]+"price1";
+                //temp=$("#select-"+[i+1]);
+                console.log("content:" + content);
+                //console.log(temp);
+                console.log("sel:" + sum);
 
-                            total += Ptotal;//合計計算用　あとでつかう
-                            temp2 = "¥" + Ptotal.toLocaleString();//書式直し
-                            temp2 = String(temp2);
-                            $("#" + genre[i] + "price2").html(temp2);//代入
-                            //console.log("temp type:"+typeof temp2+"temp val:"+temp2);
-                            //console.log($("#"+genre[i]+"price2"));
 
-                        }
-                        total = "<b>¥" + total.toLocaleString() + "</b>";
-                        $("#totalMoney").html(total);
-                        return 0;
-                    };
-                });
-            </script>
-            <tr>
-                <td colspan=6>合計金額</td>
-                <td id="totalMoney" class="price"></td>
-        </tbody>
+
+                //値変換(価格の値に含まれた不要なものを排除してint化)→後計算
+                Fprice = content.replace("¥", "");
+                Fprice = Fprice.replace(",", "");
+                Fprice = Fprice.replace(" ", "");
+                Fprice = Number(Fprice);
+                Ptotal = Fprice * Number(sum);
+                console.log(content + " selector:" + selector);
+                console.log("Fprice:" + typeof Fprice);
+                console.log(genre[i], Fprice, Ptotal, Number(sum)); //デバッグ
+
+                total += Ptotal; //合計計算用　あとでつかう
+                temp2 = "¥" + Ptotal.toLocaleString(); //書式直し
+                temp2 = String(temp2);
+                $("#" + genre[i] + "price2").html(temp2); //代入
+                //console.log("temp type:"+typeof temp2+"temp val:"+temp2);
+                //console.log($("#"+genre[i]+"price2"));
+
+            }
+            total = "<b>¥" + total.toLocaleString() + "</b>";
+            $("#totalMoney").html(total);
+            return 0;
+        };
+    });
+</script>
+<tr>
+    <td colspan=6>合計金額</td>
+    <td id="totalMoney" class="price"></td>
+    </tbody>
     </table>
     <br>
     <div class="about">
@@ -853,11 +861,8 @@ try {
         ・ discord: eichiemu<br>
         ・ Twitterが一番レスポンス早いです。<br><br>
 
-        寄付用のPaypalリンクおいておきます<div class='donate'><a href='https://paypal.me/eichiemu' target="_blank"
-                rel="noopener noreferrer">おふせ(Paypal)</a></div><br>
-        匿名がいい人はこちらから。金額は適当にどうぞ。メアドは連絡先のを入れてください。<div class='donate'><a
-                href='https://www.amazon.co.jp/dp/B004N3APGO/ref=s9_acsd_al_bw_c2_x_0_t?pf_rd_m=A3P5ROKL5A1OLE&pf_rd_s=merchandised-search-18&pf_rd_r=HTTTRCNAHN61DYE139T4&pf_rd_t=101&pf_rd_p=37ab5c0c-3d6f-4466-847b-03b0286ca49e&pf_rd_i=3131877051'
-                target="_blank" rel="noopener noreferrer">おふせ(amazon)</a></div><br>
+        寄付用のPaypalリンクおいておきます<div class='donate'><a href='https://paypal.me/eichiemu' target="_blank" rel="noopener noreferrer">おふせ(Paypal)</a></div><br>
+        匿名がいい人はこちらから。金額は適当にどうぞ。メアドは連絡先のを入れてください。<div class='donate'><a href='https://www.amazon.co.jp/dp/B004N3APGO/ref=s9_acsd_al_bw_c2_x_0_t?pf_rd_m=A3P5ROKL5A1OLE&pf_rd_s=merchandised-search-18&pf_rd_r=HTTTRCNAHN61DYE139T4&pf_rd_t=101&pf_rd_p=37ab5c0c-3d6f-4466-847b-03b0286ca49e&pf_rd_i=3131877051' target="_blank" rel="noopener noreferrer">おふせ(amazon)</a></div><br>
 
         google ADの認可おりね～～～～～(ADつけるかもしれんし付けんかもしれん(めんどいし))<br><br><br>
     </div>
@@ -865,6 +870,6 @@ try {
     <div class="notification">
         <iframe src="note.html" frameboader="0" id="noti_frame"></iframe>
     </div>
-</body>
+    </body>
 
-</html>
+    </html>
