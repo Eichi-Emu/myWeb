@@ -188,6 +188,7 @@ header('Content-Type: text/html; charset=utf-8');
         <option value="Socket TR4">Socket TR4</option>
         <option value="Socket sTRX4">Socket sTRX4</option>
         <option value="Socket sWRX8">Socket sWRX8</option>
+        <option value="Socket sTR5">Socket sTR5</option>
       </select>
       <select id="select-3" class="form-control">
         <option value="">グレード</option>
