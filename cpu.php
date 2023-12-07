@@ -65,7 +65,35 @@ header('Content-Type: text/html; charset=utf-8');
   </style>
   <script>
     $(document).ready(function() {
-      $('#main-table').tablesorter();
+      $('#main-table').tablesorter({
+        headers: {
+          0: {
+            sorter: false,
+            parser: false
+          }
+        },
+        widthFixed: true,
+        widgets: ["zebra", "filter"],
+        widgetOptions: {
+          filter_ignoreCase: true, //大文字小文字の区別
+          filter_saveFilters: true, //フィルタ情報の保存
+          filter_searchDelay: 300, //サーチかけるまでのディレイ
+
+          filter_functions: {
+            2: {
+              "インテル": function(e, n, f, i, $r, c, data) {
+                return /インテル/.test(e);
+              },
+              "AMD": function(e, n, f, i, $r, c, data) {
+                return /AMD/.test(e);
+              }
+            }
+
+
+          }
+        }
+
+      });
     });
     /*jQuery(function ($) {
       $('input#id_search').quicksearch('table tbody tr');
@@ -119,42 +147,42 @@ header('Content-Type: text/html; charset=utf-8');
         });
       });
     
-    });*/
-    jQuery(function($) {
-      $('input#id_search').quicksearch('table tbody tr');
-      var filters = {}; // 空のフィルターのオブジェクトを初期化
+      });
+      jQuery(function($) {
+        $('input#id_search').quicksearch('table tbody tr');
+        var filters = {}; // 空のフィルターのオブジェクトを初期化
 
-      // 各メニューの変更イベントを処理する
-      $('.form-control').change(function() {
-        var filter_id = $(this).attr('id'); // メニューのIDを取得
-        var filter_val = $(this).val(); // 選択された値を取得
+        // 各メニューの変更イベントを処理する
+        $('.form-control').change(function() {
+          var filter_id = $(this).attr('id'); // メニューのIDを取得
+          var filter_val = $(this).val(); // 選択された値を取得
 
-        // フィルターのオブジェクトに新しいフィルターを追加または更新する
-        if (filter_val == "") {
-          delete filters[filter_id];
-        } else {
-          filters[filter_id] = filter_val;
-        }
+          // フィルターのオブジェクトに新しいフィルターを追加または更新する
+          if (filter_val == "") {
+            delete filters[filter_id];
+          } else {
+            filters[filter_id] = filter_val;
+          }
 
-        // 各行をチェックして、表示または非表示を設定する
-        $("#main-table tbody tr").each(function(index, element) {
-          var row_text = $(element).text();
-          var visible = true;
+          // 各行をチェックして、表示または非表示を設定する
+          $("#main-table tbody tr").each(function(index, element) {
+            var row_text = $(element).text();
+            var visible = true;
 
-          $.each(filters, function(key, val) {
-            if (row_text.indexOf(val) == -1) {
-              visible = false;
+            $.each(filters, function(key, val) {
+              if (row_text.indexOf(val) == -1) {
+                visible = false;
+              }
+            });
+
+            if (visible) {
+              $(element).css("display", "table-row");
+            } else {
+              $(element).css("display", "none");
             }
           });
-
-          if (visible) {
-            $(element).css("display", "table-row");
-          } else {
-            $(element).css("display", "none");
-          }
         });
-      });
-    });
+      });*/
   </script>
 </head>
 
