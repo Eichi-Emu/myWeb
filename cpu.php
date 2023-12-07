@@ -88,8 +88,6 @@ header('Content-Type: text/html; charset=utf-8');
                 return /AMD/.test(e);
               }
             }
-
-
           }
         }
 
