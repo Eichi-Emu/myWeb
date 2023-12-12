@@ -317,11 +317,24 @@ try {
             total();
         });
         var configuration_content= "";
+        var singlePartPrice;
+        var totalPartPrice = 0;
+        var partsValue="";
 
         for (let i=0; i<11;i++)
         {
             //console.log($('#'+genre[i]+'name').text());
-            configuration_content += genre_name[i]+":"+$('#'+genre[i]+'name').text()+" "+$('#'+genre[i]+'price2').text()+"\n";
+            configuration_content += genre_name[i]+":"+$('#'+genre[i]+'name').text();
+
+            singlePartPrice = $('#'+genre[i]+'price2').text();
+            singlePartPrice =singlePartPrice.replace("¥","");
+            singlePartPrice = singlePartPrice.replace(",", "");
+            singlePartPrice = singlePartPrice.replace(" ", "");
+            singlePartPrice = Number(singlePartPrice);
+            totalPartPrice = singlePartPrice * Number($('#'+genre[i]+'value').text());
+            console.log(totalPartPrice);
+            partsValue = " x"+$('#'+genre[i]+'value').text()+"  ¥"+totalPartPrice.toLocaleString()+"\n";
+            configuration_content +=  partsValue;
         }
         configuration_content += "\n合計金額:"+ $("#totalMoney").text()+"\n \npowered by https://azarasi.net";
         //console.log("textarea_test:",configuration_content);
