@@ -312,37 +312,42 @@ try {
         var genre = ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
         var genre_name = ["CPU", "CPUクーラー", "メモリ", "マザー", "GPU", "メインSSD", "サブSSD", "HDD", "電源", "ケース", "OS"]
         total();
+        copyBoard();
         $('#noti_frame')[0].contentDocument.location.reload(true);
         $('.form-control').change(function() {
             total();
+            copyBoard();
         });
-        var configuration_content= "";
-        var singlePartPrice;
-        var totalPartPrice = 0;
-        var partValue = "";
-        var partsValue="";
+        function copyBoard(){
+            var configuration_content= "";
+            var singlePartPrice;
+            var totalPartPrice = 0;
+            var partValue = "";
+            var partsValue="";
 
-        for (let i=0; i<11;i++)
-        {
-            //console.log($('#'+genre[i]+'name').text());
-            configuration_content += genre_name[i]+":"+$('#'+genre[i]+'name').text();
-
-            singlePartPrice = $('#'+genre[i]+'price2').text();
-            singlePartPrice =singlePartPrice.replace("¥","");
-            singlePartPrice = singlePartPrice.replace(",", "");
-            singlePartPrice = singlePartPrice.replace(" ", "");
-            singlePartPrice = Number(singlePartPrice);
-            partValue = Number($('#select-'+i).val());
-            console.log("partvalue-"+partValue);
-            totalPartPrice = singlePartPrice * partValue;
-            
-            console.log(totalPartPrice);
-            partsValue = " x"+partValue+"  ¥"+totalPartPrice.toLocaleString()+"\n";
-            configuration_content +=  partsValue;
+            for (let i=0; i<11;i++)
+            {
+                //console.log($('#'+genre[i]+'name').text());
+                configuration_content += genre_name[i]+":"+$('#'+genre[i]+'name').text();
+                singlePartPrice = $('#'+genre[i]+'price1').text();
+                singlePartPrice =singlePartPrice.replace("¥","");
+                singlePartPrice = singlePartPrice.replace(",", "");
+                singlePartPrice = singlePartPrice.replace(" ", "");
+                singlePartPrice = Number(singlePartPrice);
+                partValue = Number($('#select-'+i).val());
+                console.log("partvalue-"+partValue);
+                totalPartPrice = singlePartPrice * partValue;
+                
+                console.log(totalPartPrice);
+                partsValue = " x"+partValue+"  ¥"+totalPartPrice.toLocaleString()+"\n";
+                configuration_content +=  partsValue;
+            }
+            configuration_content += "\n合計金額:"+ $("#totalMoney").text()+"\n \npowered by https://azarasi.net";
+            //console.log("textarea_test:",configuration_content);
+            $("#configurationForm").val(configuration_content);
         }
-        configuration_content += "\n合計金額:"+ $("#totalMoney").text()+"\n \npowered by https://azarasi.net";
-        //console.log("textarea_test:",configuration_content);
-        $("#configurationForm").val(configuration_content);
+
+
         $('#configCopy').click(function(){
             navigator.clipboard.writeText(configuration_content);
         })
