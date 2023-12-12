@@ -319,6 +319,7 @@ try {
         var configuration_content= "";
         var singlePartPrice;
         var totalPartPrice = 0;
+        var partValue = "";
         var partsValue="";
 
         for (let i=0; i<11;i++)
@@ -331,9 +332,12 @@ try {
             singlePartPrice = singlePartPrice.replace(",", "");
             singlePartPrice = singlePartPrice.replace(" ", "");
             singlePartPrice = Number(singlePartPrice);
-            totalPartPrice = singlePartPrice * Number($('#'+genre[i]+'value').text());
+            partValue = Number($('#select-'+i).val());
+            console.log("partvalue-"+partValue);
+            totalPartPrice = singlePartPrice * partValue;
+            
             console.log(totalPartPrice);
-            partsValue = " x"+$('#'+genre[i]+'value').text()+"  ¥"+totalPartPrice.toLocaleString()+"\n";
+            partsValue = " x"+partValue+"  ¥"+totalPartPrice.toLocaleString()+"\n";
             configuration_content +=  partsValue;
         }
         configuration_content += "\n合計金額:"+ $("#totalMoney").text()+"\n \npowered by https://azarasi.net";
