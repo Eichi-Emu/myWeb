@@ -283,7 +283,7 @@ try {
                 echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php" class="btn btn-outline-primary">変更</button></td>');
             }
             echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
-            echo ('<td id="'.$genre_arr[$i].'name"><a href =' . $url . ' target="_blank" rel="noopener noreferrer">' . $name . '</td>');
+            echo ('<td id="' . $genre_arr[$i] . 'name"><a href =' . $url . ' target="_blank" rel="noopener noreferrer">' . $name . '</td>');
             echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">' . $price . '</td>');
             echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-' . $i . '" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
             echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
@@ -296,7 +296,7 @@ try {
                 echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php\'" class="btn btn-outline-primary">変更</button></td>');
             }
             echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
-            echo ('<td id="'.$genre_arr[$i].'name"><a href = ></td>');
+            echo ('<td id="' . $genre_arr[$i] . 'name"><a href = ></td>');
             echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">0</td>');
             echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-' . $i . '" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
             echo ('<td id="' . $genre_arr[$i] . 'price2" class="price"></td>');
@@ -318,38 +318,39 @@ try {
             total();
             copyBoard();
         });
-        function copyBoard(){
-            var configuration_content= "";
+
+        function copyBoard() {
+            var configuration_content = "";
             var singlePartPrice;
             var totalPartPrice = 0;
             var partValue = "";
-            var partsValue="";
+            var partsValue = "";
 
-            for (let i=0; i<11;i++)
-            {
+            for (let i = 0; i < 11; i++) {
                 //console.log($('#'+genre[i]+'name').text());
-                configuration_content += genre_name[i]+":"+$('#'+genre[i]+'name').text();
-                singlePartPrice = $('#'+genre[i]+'price1').text();
-                singlePartPrice =singlePartPrice.replace("¥","");
+                configuration_content += genre_name[i] + ":" + $('#' + genre[i] + 'name').text();
+                singlePartPrice = $('#' + genre[i] + 'price1').text();
+                singlePartPrice = singlePartPrice.replace("¥", "");
                 singlePartPrice = singlePartPrice.replace(",", "");
                 singlePartPrice = singlePartPrice.replace(" ", "");
                 singlePartPrice = Number(singlePartPrice);
-                partValue = Number($('#select-'+i).val());
-                console.log("partvalue-"+partValue);
+                partValue = Number($('#select-' + i).val());
+                console.log("partvalue-" + partValue);
                 totalPartPrice = singlePartPrice * partValue;
-                
+
                 console.log(totalPartPrice);
-                partsValue = " x"+partValue+"  ¥"+totalPartPrice.toLocaleString()+"\n";
-                configuration_content +=  partsValue;
+                partsValue = " x" + partValue + "  ¥" + totalPartPrice.toLocaleString() + "\n";
+                configuration_content += partsValue;
             }
-            configuration_content += "\n合計金額:"+ $("#totalMoney").text()+"\n \npowered by https://azarasi.net";
+            configuration_content += "\n合計金額:" + $("#totalMoney").text() + "\n \npowered by https://azarasi.net";
             //console.log("textarea_test:",configuration_content);
             $("#configurationForm").val(configuration_content);
         }
 
 
-        $('#configCopy').click(function(){
-            navigator.clipboard.writeText(configuration_content);
+        $('#configCopy').click(function() {
+            configuration_inbox_content = $('#configurationForm').val();
+            navigator.clipboard.writeText(configuration_inbox_content);
         })
 
         function total() {
@@ -416,10 +417,10 @@ try {
     </table>
     <br>
     <div style="text-align: center;">
-        <textarea readonly rows="15" cols="100" id="configurationForm"style=""></textarea>
+        <textarea readonly rows="15" cols="100" id="configurationForm" style=""></textarea>
         <button id="configCopy" class="configCopy">構成内容コピー</button>
     </div>
-    <div class="about"> 
+    <div class="about">
         <h2>About</h2>
         シンプルな自作パソコン用見積もりサイトです。URLをコピーすれば共有できます。(長いのは追々どうにかします)<br>
         価格comの最安値を出します。商品名から該当商品の価格comページに飛べます。<br><br>
