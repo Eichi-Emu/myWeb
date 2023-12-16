@@ -1,56 +1,118 @@
 <?php
 
-function parts_filter($genre)
+function parts_header($genre)
 {
-    switch ($genre) {
-        case "cpu":
-            $str = <<<DOM
-            <form class="form-inline">
-            <div class="form-group">
-              <select id="select-1" class="form-control">
-                <option value="">メーカー</option>
-                <option value="インテル">Intel</option>
-                <option value="AMD">AMD</option>
-              </select>
-            <select id="select-2" class="form-control">
-                <option value="">ソケット</option>
-                <option value="">-intel-</option>
-                <option value="LGA1700">LGA1700</option>
-                <option value="LGA1200">LGA1200</option>
-                <option value="LGA1151">LGA1151</option>
-                <option value="LGA2066">LGA2066</option>
-                <option value="LGA3647">LGA3647</option>
-                <option value="LGA4189">LGA4189</option>
-                <option value="">-AMD-</option>
-                <option value="Socket AM5">Socket AM5</option>
-                <option value="Socket AM4">Socket AM4</option>
-                <option value="Socket TR4">Socket TR4</option>
-                <option value="Socket sTRX4">Socket sTRX4</option>
-                <option value="Socket sWRX8">Socket sWRX8</option>
-            </select>
-            <select id="select-3" class="form-control">
-                <option value="">グレード</option>
-                <option value="">--Intel--</option>
-                <option value="Core i9">Core i9</option>
-                <option value="Core i7">Core i7</option>
-                <option value="Core i5">Core i5</option>
-                <option value="Core i3">Core i3</option>
-                <option value="Pentium">Pentium</option>
-                <option value="Celeron">Celeron</option>
-                <option value="">--AMD--</option>
-                <option value="Ryzen 9">Ryzen 9</option>
-                <option value="Ryzen 7">Ryzen 7</option>
-                <option value="Ryzen 5">Ryzen 5</option>
-                <option value="Ryzen 3">Ryzen 3</option>
-            </select>
-            </div>
-            </form>
+  switch ($genre) {
+    case "cpu":
+      $str = <<<DOM
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>cpu</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.widgets.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css">
+          
+            <style>
+              #main-table {
+                font-size: 1.2em;
+              }
+            </style>
+            <script>
+              $(document).ready(function() {
+                $('#main-table').tablesorter({
+                  headers: {
+                    0: {
+                      sorter: false,
+                      parser: false
+                    }
+                  },
+                  widthFixed: true,
+                  widgets: ["zebra", "filter"],
+                  widgetOptions: {
+                    filter_ignoreCase: true, //大文字小文字の区別
+                    filter_saveFilters: true, //フィルタ情報の保存
+                    filter_searchDelay: 300, //サーチかけるまでのディレイ
+          
+                    filter_functions: {
+                      2: {
+                        "インテル": function(e, n, f, i, \$r, c, data) {
+                          return /インテル/.test(e);
+                        },
+                        "AMD": function(e, n, f, i, \$r, c, data) {
+                          return /AMD/.test(e);
+                        }
+                      },
+                      6: {
+                        "--intel--": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1700|LGA1200|LGA1151|LGA2066|LGA3647|LGA4189|LGA4677|LGA775|LGA1150|LGA1156|LGA2011/.test(e);
+                        },
+                        "LGA1700": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1700/.test(e);
+                        },
+                        "LGA1200": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1200/.test(e);
+                        },
+                        "LGA4677": function(e, n, f, i, \$r, c, data) {
+                          return /LGA4677/.test(e);
+                        },
+                        "LGA4189": function(e, n, f, i, \$r, c, data) {
+                          return /LGA4189/.test(e);
+                        },
+                        "LGA1151": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1151/.test(e);
+                        },
+                        "LGA1150": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1150/.test(e);
+                        },
+                        "LGA1156": function(e, n, f, i, \$r, c, data) {
+                          return /LGA1156/.test(e);
+                        },
+                        "LGA775": function(e, n, f, i, \$r, c, data) {
+                          return /LGA775/.test(e);
+                        },
+                        "LGA2066": function(e, n, f, i, \$r, c, data) {
+                          return /LGA2066/.test(e);
+                        },
+                        "LGA2011": function(e, n, f, i, \$r, c, data) {
+                          return /LGA2011/.test(e);
+                        },
+                        "--AMD--": function(e, n, f, i, \$r, c, data) {
+                          return /Socket AM5|Socket AM4|Socket sTR5|Socket sWRX8|Socket sTRX4|Socket TR4/.test(e);
+                        },
+                        "Socket AM5": function(e, n, f, i, \$r, c, data) {
+                          return /Socket AM5/.test(e);
+                        },
+                        "Socket AM4": function(e, n, f, i, \$r, c, data) {
+                          return /Socket AM4/.test(e);
+                        },
+                        "Socket sTR5": function(e, n, f, i, \$r, c, data) {
+                          return /Socket sTR5/.test(e);
+                        },
+                        "Socket sWRX8": function(e, n, f, i, \$r, c, data) {
+                          return /Socket sWRX8/.test(e);
+                        },
+                        "Socket sTRX4": function(e, n, f, i, \$r, c, data) {
+                          return /Socket sTRX4/.test(e);
+                        },
+                        "Socket TR4": function(e, n, f, i, \$r, c, data) {
+                          return /Socket TR4/.test(e);
+                        },
+          
+                      }
+                    }
+                  }
+                });
+              });
+            </script>
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "cpuc":
-            $str = <<<DOM
+    case "cpuc":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="maker-select" class="form-control">
@@ -121,11 +183,11 @@ function parts_filter($genre)
               </select>
               </div></form>
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "ram":
-            $str = <<<DOM
+    case "ram":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -247,11 +309,11 @@ function parts_filter($genre)
               </select>
             </div></form>
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "mb":
-            $str = <<<DOM
+    case "mb":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -354,11 +416,11 @@ function parts_filter($genre)
               </select>
               </div></form>    
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "gpu":
-            $str = <<<DOM
+    case "gpu":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -434,11 +496,11 @@ function parts_filter($genre)
               </select>
             </div></form>    
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "ssd":
-            $str = <<<DOM
+    case "ssd":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -494,11 +556,11 @@ function parts_filter($genre)
               </select>
               </div></form>
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "ssd2":
-            $str = <<<DOM
+    case "ssd2":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -554,11 +616,11 @@ function parts_filter($genre)
               </select>
               </div></form>
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "hdd":
-            $str = <<<DOM
+    case "hdd":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -587,11 +649,11 @@ function parts_filter($genre)
             </div>
             </form>    
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "psu":
-            $str = <<<DOM
+    case "psu":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -652,11 +714,11 @@ function parts_filter($genre)
             </div>
             </form>    
             DOM;
-            echo $str;
-            break;
+      echo $str;
+      break;
 
-        case "pccase":
-            $str = <<<DOM
+    case "pccase":
+      $str = <<<DOM
             <form class="form-inline">
             <div class="form-group">
               <select id="select-1" class="form-control">
@@ -701,7 +763,7 @@ function parts_filter($genre)
               </select>
             </div></form>    
             DOM;
-            echo $str;
-            break;
-    }
+      echo $str;
+      break;
+  }
 }
