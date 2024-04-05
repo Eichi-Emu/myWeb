@@ -1,11 +1,11 @@
 <?php
-
+require_once("./idpw/Database.inc");
 try {
 
   $pdo = new PDO(
     'mysql:dbname=kakaku;host=localhost;charset=utf8mb4',
-    'user',
-    'xX114514',
+    $db['user'],
+    $db['pass'],
     [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -19,12 +19,12 @@ try {
 
 
 try {
-
+  $pp = file("p.txt");
 
   $pdo = new PDO(
-    'mysql:dbname=kakaku;host=localhost;charset=utf8mb4',
-    'user',
-    'xX114514',
+    $pp[0],
+    $pp[1],
+    $pp[2],
     [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -48,109 +48,6 @@ header('Content-Type: text/html; charset=utf-8');
   include('parts_header.php');
   parts_header('cpu');
   ?>
-  <!--
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>cpu</title>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.widgets.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css">
-
-  <style>
-    #main-table {
-      font-size: 1.2em;
-    }
-  </style>
-  <script>
-    $(document).ready(function() {
-      $('#main-table').tablesorter({
-        headers: {
-          0: {
-            sorter: false,
-            parser: false
-          }
-        },
-        widthFixed: true,
-        widgets: ["zebra", "filter"],
-        widgetOptions: {
-          filter_ignoreCase: true, //大文字小文字の区別
-          filter_saveFilters: true, //フィルタ情報の保存
-          filter_searchDelay: 300, //サーチかけるまでのディレイ
-
-          filter_functions: {
-            2: {
-              "インテル": function(e, n, f, i, $r, c, data) {
-                return /インテル/.test(e);
-              },
-              "AMD": function(e, n, f, i, $r, c, data) {
-                return /AMD/.test(e);
-              }
-            },
-            6: {
-              "--intel--": function(e, n, f, i, $r, c, data) {
-                return /LGA1700|LGA1200|LGA1151|LGA2066|LGA3647|LGA4189|LGA4677|LGA775|LGA1150|LGA1156|LGA2011/.test(e);
-              },
-              "LGA1700": function(e, n, f, i, $r, c, data) {
-                return /LGA1700/.test(e);
-              },
-              "LGA1200": function(e, n, f, i, $r, c, data) {
-                return /LGA1200/.test(e);
-              },
-              "LGA4677": function(e, n, f, i, $r, c, data) {
-                return /LGA4677/.test(e);
-              },
-              "LGA4189": function(e, n, f, i, $r, c, data) {
-                return /LGA4189/.test(e);
-              },
-              "LGA1151": function(e, n, f, i, $r, c, data) {
-                return /LGA1151/.test(e);
-              },
-              "LGA1150": function(e, n, f, i, $r, c, data) {
-                return /LGA1150/.test(e);
-              },
-              "LGA1156": function(e, n, f, i, $r, c, data) {
-                return /LGA1156/.test(e);
-              },
-              "LGA775": function(e, n, f, i, $r, c, data) {
-                return /LGA775/.test(e);
-              },
-              "LGA2066": function(e, n, f, i, $r, c, data) {
-                return /LGA2066/.test(e);
-              },
-              "LGA2011": function(e, n, f, i, $r, c, data) {
-                return /LGA2011/.test(e);
-              },
-              "--AMD--": function(e, n, f, i, $r, c, data) {
-                return /Socket AM5|Socket AM4|Socket sTR5|Socket sWRX8|Socket sTRX4|Socket TR4/.test(e);
-              },
-              "Socket AM5": function(e, n, f, i, $r, c, data) {
-                return /Socket AM5/.test(e);
-              },
-              "Socket AM4": function(e, n, f, i, $r, c, data) {
-                return /Socket AM4/.test(e);
-              },
-              "Socket sTR5": function(e, n, f, i, $r, c, data) {
-                return /Socket sTR5/.test(e);
-              },
-              "Socket sWRX8": function(e, n, f, i, $r, c, data) {
-                return /Socket sWRX8/.test(e);
-              },
-              "Socket sTRX4": function(e, n, f, i, $r, c, data) {
-                return /Socket sTRX4/.test(e);
-              },
-              "Socket TR4": function(e, n, f, i, $r, c, data) {
-                return /Socket TR4/.test(e);
-              },
-
-            }
-          }
-        }
-      });
-    });
-  </script>
--->
 </head>
 
 <body>
