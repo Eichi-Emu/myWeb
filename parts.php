@@ -1,24 +1,9 @@
 <?php
 require("PDOtest.php");
 $pdo=db_connection();
-//$pp = file("p.txt");//DBログイン情報ファイル
-//$db_string=sprintf($pp);//DB名等指定
-//$user=$pp[1];//ユーザー名
-//$pass=$pp[2];//パス
 $genre = $_GET['genre'];//ジャンル
 
-//echo($db_string."U=".$user."P=".$pass);
-/*"$db_string",
-    "$user",
-    "$pass",
-    
-    'mysql:dbname=kakaku;host=localhost;charset=utf8mb4',
-    'user',
-    'xX114514',
-    */
-
 try {
-  //echo $pp[0];
   $pdo = db_connection();
 } catch (PDOException $e) {
   header('Content-Type: text/plain; charset=UTF-8', true, 500);
@@ -33,11 +18,9 @@ header('Content-Type: text/html; charset=utf-8');
   <?php
   include('parts_header.php');
   parts_header($_GET['genre']);
-  //echo $_GET['genre'];
   ?>
 
-
-      <?php
+    <?php
       function url_param_change($par = array(), $op = 0)
       {
         $url = parse_url($_SERVER["REQUEST_URI"]);
@@ -67,12 +50,12 @@ header('Content-Type: text/html; charset=utf-8');
         unset($all_query['genre']);
         $encoded_query = http_build_query($all_query);
         if($encoded_query){
-        $dom = <<< DOM
-        <button onclick = "location.href='index.php?{$encoded_query}'" class="btn btn-outline-primary">戻る</button>
+          $dom = <<< DOM
+          <button onclick = "location.href='index.php?{$encoded_query}'" class="btn btn-outline-primary">戻る</button>
         DOM;}
         else{
           $dom = <<< DOM
-        <button onclick = "location.href='index.php'" class="btn btn-outline-primary">戻る</button>
+          <button onclick = "location.href='index.php'" class="btn btn-outline-primary">戻る</button>
         DOM;
         }
         echo($dom);
