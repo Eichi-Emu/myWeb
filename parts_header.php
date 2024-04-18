@@ -5,6 +5,7 @@ function parts_header($genre)
   switch ($genre) {
     case "cpu":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +38,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "インテル": function(e, n, f, i, \$r, c, data) {
                           return /インテル/.test(e);
                         },
@@ -45,7 +46,7 @@ function parts_header($genre)
                           return /AMD/.test(e);
                         }
                       },
-                      6: {
+                      5: {
                         "--intel--": function(e, n, f, i, \$r, c, data) {
                           return /LGA1700|LGA1200|LGA1151|LGA2066|LGA3647|LGA4189|LGA4677|LGA775|LGA1150|LGA1156|LGA2011/.test(e);
                         },
@@ -107,12 +108,32 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head>
+            <body>
+              <div align="center">
+                <h1>CPUリスト</h1>
+              </div>
+              <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+              <br>
+              <table align="center" border="1" cellpadding="5" id="main-table" class="order-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="maker">メーカー</th>
+                    <th class="name">製品名</th>
+                    <th class="price">値段</th>
+                    <th class="gen">世代</th>
+                    <th class="socket">ソケット</th>
+                  </tr>
+                </thead>
+                <tbody>
             DOM;
       echo $str;
       break;
 
     case "cpuc":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -145,7 +166,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ADATA":function(e, n, f, i, \$r, c, data) { return /ADATA/.test(e); },
                         "AINEX":function(e, n, f, i, \$r, c, data) { return /AINEX/.test(e); },
                         "ANTEC":function(e, n, f, i, \$r, c, data) { return /ANTEC/.test(e); },
@@ -188,7 +209,7 @@ function parts_header($genre)
                         "オウルテック":function(e, n, f, i, \$r, c, data) { return /オウルテック/.test(e); },
                         "サイズ":function(e, n, f, i, \$r, c, data) { return /サイズ/.test(e); },
                       },
-                      5: {
+                      4: {
                         "トップフロー": function(e, n, f, i, \$r, c, data) {
                           return /トップフロー/.test(e);
                         },
@@ -199,7 +220,7 @@ function parts_header($genre)
                           return /水冷/.test(e);
                         },
                       },
-                      6: {
+                      5: {
                         "--intel--": function(e, n, f, i, \$r, c, data) {
                           return /1700|1200|1151|2066|3647|4189|4677|775|1150|1156|2011/.test(e);
                         },
@@ -260,12 +281,32 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head>
+            <body>
+              <div align="center">
+                      <h1>クーラーリスト</h1>
+                  </div>
+                  <br>
+                  <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                  <table align="center" border="1" cellpadding="5" class="order-table" id="main-table" >
+                    <thead>
+                      <tr>
+                          <th style="width: 4%"></th>
+                          <th class="maker" style="width: 8%">メーカー</th>
+                          <th class="name" style="width: 30%">製品名</th>
+                          <th class="price">値段</th>
+                          <th class="gen">冷却方式</th>
+                          <th class="socket">ソケット</th>
+                          <th class="socket">ラジサイズ/本体サイズ</th>
+                      </tr> 
+                    </thead>
             DOM;
       echo $str;
       break;
 
     case "ram":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -298,7 +339,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
                           return /ADATA/.test(e);
                         },
@@ -396,7 +437,7 @@ function parts_header($genre)
                           return /ノーブランド/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "DDR4": function(e, n, f, i, \$r, c, data) {
                           return /DDR4 SDRAM/.test(e);
                         },
@@ -404,12 +445,12 @@ function parts_header($genre)
                           return /DDR5 SDRAM/.test(e);
                         }
                       },
-                      6: {
+                      5: {
                         "DIMM": function(e, n, f, i, \$r, c, data) {
                           return /DIMM/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "--DDR5--": function(e, n, f, i, \$r, c, data) {
                           return /DDR5/.test(e);
                         },
@@ -519,7 +560,7 @@ function parts_header($genre)
                           return /DDR4-5333/.test(e);
                         }
                       },
-                      8:{
+                      7:{
                         "8GB": function(e, n, f, i, \$r, c, data) {
                           return /^8/.test(e);
                         },
@@ -548,7 +589,7 @@ function parts_header($genre)
                           return /192 GB/.test(e);
                         }
                       },
-                      9:{
+                      8:{
                         "8GB": function(e, n, f, i, \$r, c, data) {
                           return /^8/.test(e);
                         },
@@ -568,7 +609,7 @@ function parts_header($genre)
                           return /64㌐/.test(e);
                         }
                       },
-                      10:{
+                      9:{
                         "ECC非対応": function(e, n, f, i, \$r, c, data) {
                           return /eccNG/.test(e);
                         },
@@ -589,13 +630,37 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head
+            <body>
+              <div align="center">
+                <h1>メモリリスト</h1>
+              </div>
+              <br>
+              <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+              <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="maker">メーカー</th>
+                    <th class="name">製品名</th>
+                    <th class="price">値段</th>
+                    <th class="gen">規格</th>
+                    <th class="type">I/F</th>
+                    <th class="hz">周波数</th>
+                    <th class="ram_value">合計容量</th>
+                    <th class="pcs_value">一枚当たり容量</th>
+                    <th class="ecc">ecc対応</th>
+                    <th class="reg">Reg対応</th>
+                  </tr>
+                </thead>
             DOM;
       echo $str;
       break;
 
     case "mb":
       $str = <<<DOM
-                        <meta charset="UTF-8">
+            <head>
+            <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>マザーボード</title>
@@ -627,7 +692,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ASUS": function(e, n, f, i, \$r, c, data) {
                           return /ASUS/.test(e);
                         },
@@ -650,7 +715,7 @@ function parts_header($genre)
                           return /NZXT/.test(e);
                         }
                       },
-                      5: {
+                      4: {
                         "--Intel--": function(e, n, f, i, \$r, c, data) {
                           return / /.test(e);
                         },
@@ -727,7 +792,7 @@ function parts_header($genre)
                           return /WRX80/.test(e);
                         }
                       },
-                      6:{
+                      5:{
                         "--intel--": function(e, n, f, i, \$r, c, data) {
                           return / /.test(e);
                         },
@@ -771,7 +836,7 @@ function parts_header($genre)
                           return /Onboard/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "ATX": function(e, n, f, i, \$r, c, data) {
                           return /(?<!Micro|Flex)ATX/.test(e);
                         },
@@ -794,7 +859,7 @@ function parts_header($genre)
                           return /FlexATX/.test(e);
                         }
                       },
-                      8:
+                      7:
                       {
                         "DDR4": function(e, n, f, i, \$r, c, data) {
                           return /DDR4/.test(e);
@@ -803,7 +868,7 @@ function parts_header($genre)
                           return /DDR5/.test(e);
                         }
                       },
-                      9:
+                      8:
                       {
                         "2slot": function(e, n, f, i, \$r, c, data) {
                           return /2slot/.test(e);
@@ -818,7 +883,7 @@ function parts_header($genre)
                           return /8slot/.test(e);
                         }
                       },
-                      10:{
+                      9:{
                         "なし": function(e, n, f, i, \$r, c, data) {
                           return /NO-TB/.test(e);
                         },
@@ -826,7 +891,7 @@ function parts_header($genre)
                           return /ON-TB/.test(e);
                         }
                       },
-                      11:{
+                      10:{
                         "あり": function(e, n, f, i, \$r, c, data) {
                           return /NO-wifi/.test(e);
                         },
@@ -838,13 +903,37 @@ function parts_header($genre)
                   }
                 });
               });
-            </script> 
+            </script>
+            </head>
+            <body>
+            <div align="center">
+                    <h1>マザーボードリスト</h1>
+                </div>
+                <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <br>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="chipset">チップセット</th>
+                        <th class="socket">ソケット</th>
+                        <th class="formfactor">フォームファクタ</th>
+                        <th class="ram">メモリ種類</th>
+                        <th class="ramnum">メモリスロット数</th>
+                        <th class="Thunderbolt">TBの有無</th>
+                        <th class="wifi">Wi-Fiの有無</th>
+                    </tr> 
+                  </thead> 
             DOM;
       echo $str;
       break;
 
     case "gpu":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -877,7 +966,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ASUS": function(e, n, f, i, \$r, c, data) {
                           return /ASUS/.test(e);
                         },
@@ -924,7 +1013,7 @@ function parts_header($genre)
                           return /玄人志向/.test(e);
                         }
                       },
-                      5: {
+                      4: {
                         "NVIDIA": function(e, n, f, i, \$r, c, data) {
                           return /NVIDIA/.test(e);
                         },
@@ -935,7 +1024,7 @@ function parts_header($genre)
                           return /Intel/.test(e);
                         }
                       },
-                      6:{
+                      5:{
                         "--NVIDIA--": function(e, n, f, i, \$r, c, data) {
                           return / /.test(e);
                         },
@@ -1090,7 +1179,7 @@ function parts_header($genre)
                           return /Arc A310/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "GDDR6X": function(e, n, f, i, \$r, c, data) {
                           return /GDDR6X/.test(e);
                         },
@@ -1121,12 +1210,35 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head>
+            <body>
+              <div align="center">
+                <h1>GPUリスト</h1>
+              </div>
+              <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+              <br>
+              <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="maker">メーカー</th>
+                    <th class="name">製品名</th>
+                    <th class="price">値段</th>
+                    <th class="chipmaker">チップメーカー</th>
+                    <th class="chip">チップ</th>
+                    <th class="vramtype">VRAMタイプ</th>
+                    <th class="vramsize">VRAMサイズ</th>
+                    <th class="cooling">冷却方式</th>
+                    <th class="size">大きさ</th>
+                  </tr>
+                </thead>
             DOM;
       echo $str;
       break;
 
     case "ssd":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1159,7 +1271,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
                           return /ADATA/.test(e);
                         },
@@ -1218,7 +1330,7 @@ function parts_header($genre)
                           return /WESTERN DIGITAL/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "128GB前後": function(e, n, f, i, \$r, c, data) {
                           return /120GB|128GB/.test(e);
                         },
@@ -1241,7 +1353,7 @@ function parts_header($genre)
                           return /8000GB|8196GB/.test(e);
                         }
                       },
-                6:{
+                      5:{
                         "Serial ATA": function(e, n, f, i, \$r, c, data) {
                           return /Serial ATA/.test(e);
                         },
@@ -1255,7 +1367,7 @@ function parts_header($genre)
                           return /PCI-Express(?! Gen4)|PCI-Express Gen3/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "2.5インチ": function(e, n, f, i, \$r, c, data) {
                           return /2.5インチ/.test(e);
                         },
@@ -1283,12 +1395,34 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head>
+            <body>
+            <div align="center">
+                    <h1>SSDリスト</h1>
+            </div>
+            <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <br>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="ssd_value">容量</th>
+                        <th class="interface">インターフェース</th>
+                        <th class="type">形状</th>
+                        <th class="readspeed">読込速度</th>
+                        <th class="writespeed">書込速度</th>
+                    </tr>
+                  </thead>
             DOM;
       echo $str;
       break;
 
     case "ssd2":
       $str = <<<DOM
+            <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1321,7 +1455,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
                           return /ADATA/.test(e);
                         },
@@ -1380,7 +1514,7 @@ function parts_header($genre)
                           return /WESTERN DIGITAL/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "128GB前後": function(e, n, f, i, \$r, c, data) {
                           return /120GB|128GB/.test(e);
                         },
@@ -1403,7 +1537,7 @@ function parts_header($genre)
                           return /8000GB|8196GB/.test(e);
                         }
                       },
-                6:{
+                    5:{
                         "Serial ATA": function(e, n, f, i, \$r, c, data) {
                           return /Serial ATA/.test(e);
                         },
@@ -1417,7 +1551,7 @@ function parts_header($genre)
                           return /PCI-Express(?! Gen4)|PCI-Express Gen3/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "2.5インチ": function(e, n, f, i, \$r, c, data) {
                           return /2.5インチ/.test(e);
                         },
@@ -1445,6 +1579,27 @@ function parts_header($genre)
                 });
               });
             </script>
+            </head>
+            <body>
+            <div align="center">
+                    <h1>SSDリスト</h1>
+            </div>
+                <br>
+                <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="ssd_value">容量</th>
+                        <th class="interface">インターフェース</th>
+                        <th class="type">形状</th>
+                        <th class="readspeed">読込速度</th>
+                        <th class="writespeed">書込速度</th>
+                    </tr>
+                  </thead>
             DOM;
       echo $str;
       break;
@@ -1483,7 +1638,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "HGST": function(e, n, f, i, \$r, c, data) {
                           return /HGST/.test(e);
                         },
@@ -1500,7 +1655,7 @@ function parts_header($genre)
                           return /東芝/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "500GB": function(e, n, f, i, \$r, c, data) {
                           return /500GB/.test(e);
                         },
@@ -1545,7 +1700,26 @@ function parts_header($genre)
                   }
                 });
               });
-            </script>   
+            </script>
+            </head>
+            <body>
+            <div align="center">
+                    <h1>HDDリスト</h1>
+                </div>
+                <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <br>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="hdd_value">容量</th>
+                        <th class="rpm">回転数</th>
+                        <th class="interface">インターフェース</th>
+                    </tr> 
+                  </thead> 
             DOM;
       echo $str;
       break;
@@ -1584,7 +1758,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
                           return /ADATA/.test(e);
                         },
@@ -1649,7 +1823,7 @@ function parts_header($genre)
                           return /玄人志向/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "500W台": function(e, n, f, i, \$r, c, data) {
                           return /(?<!1)5[0-9][0-9]W/.test(e);
                         },
@@ -1681,7 +1855,7 @@ function parts_header($genre)
                           return /20[0-9][0-9]W/.test(e);
                         }
                       },
-                      6:{
+                      5:{
                         "Standard": function(e, n, f, i, \$r, c, data) {
                           return /Standard/.test(e);
                         },
@@ -1701,7 +1875,7 @@ function parts_header($genre)
                           return /Titanium/.test(e);
                         }
                       },
-                      7:{
+                      6:{
                         "ATX v3.0": function(e, n, f, i, \$r, c, data) {
                           return /ATX v3.0/.test(e);
                         },
@@ -1725,7 +1899,27 @@ function parts_header($genre)
                   }
                 });
               });
-            </script> 
+            </script>
+            </head>
+            <body>
+            <div align="center">
+              <h1>電源リスト</h1>
+            </div>
+            <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <br>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="psu_value">容量</th>
+                        <th class="efficiency">認証</th>
+                        <th class="formfactor">フォームファクタ</th>
+                        <th class="plug_in">プラグイン対応の有無</th>
+                    </tr> 
+                  </thead>
             DOM;
       echo $str;
       break;
@@ -1764,7 +1958,7 @@ function parts_header($genre)
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
           
                     filter_functions: {
-                      2: {
+                      1: {
                         "Abee": function(e, n, f, i, \$r, c, data) {
                           return /Abee/.test(e);
                         },
@@ -1856,7 +2050,7 @@ function parts_header($genre)
                           return /長尾製作所/.test(e);
                         }
                       },
-                      5:{
+                      4:{
                         "ATX": function(e, n, f, i, \$r, c, data) {
                           return /[0-9]\sATX\s/.test(e);
                         },
@@ -1874,8 +2068,89 @@ function parts_header($genre)
                   }
                 });
               });
-            </script> 
+            </script>
+            </head>
+            <body>
+            <div align="center">
+                    <h1>ケースリスト</h1>
+                </div>
+                <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                <br>
+                <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th class="maker">メーカー</th>
+                        <th class="name">製品名</th>
+                        <th class="price">値段</th>
+                        <th class="formfactor">フォームファクタ</th>
+                        <th class="cpu_height">CPU最大高</th>
+                        <th class="gpu_length">GPU最大長</th>
+                    </tr> 
+                  </thead>
             DOM;
+      echo $str;
+      break;
+    
+    case "os":
+      $str = <<<DOM
+      <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>os</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.widgets.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css">
+          <style>
+          #main-table th {
+          background-color:deepskyblue;
+          }
+          #main-table{
+            font-size: 1.0em;
+          }
+        </style>
+        <script>
+        $(document).ready(function() {
+          $('#main-table').tablesorter({
+            headers: {
+              0: {
+                sorter: false,
+                parser: false
+              }
+            },
+            widthFixed: true,
+            widgets: ["zebra", "filter"],
+            widgetOptions: {
+              filter_ignoreCase: true, //大文字小文字の区別
+              filter_saveFilters: true, //フィルタ情報の保存
+              filter_searchDelay: 300, //サーチかけるまでのディレイ
+      
+              filter_functions: {   
+                }
+              }
+          });
+        });
+      </script>
+        </head>
+        <body>
+        <div align="center">
+                <h1>OSリスト</h1>
+            </div>
+            <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+            <br>
+            <table align="center" border="1" cellpadding="5" class="order-table" id="main-table">
+                <thead>
+                <tr>
+                    <th></th> 
+                    <th class="maker">メーカー</th>
+                    <th class="name">製品名</th>
+                    <th class="price">値段</th>
+                </tr> 
+                </thead>
+      DOM;
       echo $str;
       break;
   }

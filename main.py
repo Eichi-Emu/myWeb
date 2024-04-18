@@ -70,18 +70,18 @@ class dosomething:
         num = 1
         content_url = []
 
-        url = self.url + genre + self.aspx
+        url = self.url + genre + self.aspx  #ジャンルごとのリストURLの動的生成
         res = requests.get(url)
-        time.sleep(3)
+        time.sleep(3)   #読み込み完了待機
         soup = BeautifulSoup(res.content, "lxml")
 
-        req = soup.find(class_="result").get_text()
-        req = int(req.replace('製品',''))
-        req_sum = (req // 40 + 1)
+        req = soup.find(class_="result").get_text() #製品数の取得
+        req = int(req.replace('製品','')) #末尾に「製品」がついているため排除し数値化
+        req_sum = (req // 40 + 1) #実ページ数計算
         print(genre+":content sum>" + str(req))
         print(genre+":Page sum>" + str(req_sum))
 
-        while num <= req_sum:
+        while num <= req_sum:   #製品詳細画面用ID取得
             content = soup.find_all(class_="ckitemLink")
             for tag in content:
                 for a in tag.select('a'):
@@ -92,7 +92,7 @@ class dosomething:
             time.sleep(1)
 
             soup = BeautifulSoup(res.content, "lxml")
-            num = num + 1  # todo なおすこと
+            num = num + 1
         num = 0
         for c in content_url:
             content_url[num] = content_url[num] + "spec/"
@@ -1252,7 +1252,7 @@ class dosomething:
         os_content = self.scr_getContent(os_url, "os")
         self.sql_write(os_content, 'os')
 
-    def doit(self):
+    def threading(self):
 
         thread1 = threading.Thread(target=self.cpu)
         thread2 = threading.Thread(target=self.cpuc)
@@ -1283,4 +1283,4 @@ class dosomething:
 
 test = dosomething()
 #test.case()
-test.doit()
+test.threading()

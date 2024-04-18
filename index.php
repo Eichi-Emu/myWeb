@@ -57,7 +57,6 @@ for ($i = 0; $i < count($genre_arr); $i++) {
         $header_flag = true;
         $name = NULL;
         $url = NULL;
-        //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
         $price = NULL;
         $id = filter_input(INPUT_GET, $genre_arr[$i]);
         if ($genre_arr[$i] == "ssd2") //ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
@@ -69,10 +68,6 @@ for ($i = 0; $i < count($genre_arr); $i++) {
         $sql = "SELECT * FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
         $sqlQuery = $db->query($sql);
         $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
-        $changeUrlTemp = $genre_arr[$i] . '.php?';
-        $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
-        $changeUrlTemp = "'" . $changeUrlTemp;
-        $urlQueryTemp = $query . "'";
 
         //foreach($things as $test){echo($test);}
         switch ($genre_arr[$i]) {
@@ -242,13 +237,12 @@ echo <<<default_str
                     </thead>
                     <tbody>
             default_str;
+
 try {
     for ($i = 0; $i < count($genre_arr); $i++) {
-        //echo(isset($_GET[$genre_arr[$i]]));
         if (isset($_GET[$genre_arr[$i]])) {
             $name = NULL;
             $url = NULL;
-            //$genreUrl ='location.href='+$genre_arr[$i]+'.php';
             $price = NULL;
             $id = filter_input(INPUT_GET, $genre_arr[$i]);
             if ($genre_arr[$i] == "ssd2") //ssd2のDBエラー回避、URL生成はそのまま配列を使用(これまたサイト側のURLに支障をきたさないようにするため)
@@ -261,14 +255,12 @@ try {
             $sql = "SELECT id,url,name,price FROM `" . $genre_arr_i . "` WHERE ID ='" . $id . "'LIMIT 1";
             $sqlQuery = $db->query($sql);
             $things = $sqlQuery->fetch(PDO::FETCH_ASSOC);
-            $changeUrlTemp = $genre_arr[$i] . '.php?';
+            $changeUrlTemp = 'parts.php?genre='.$genre_arr[$i]."&";
             $changeUrlTemp = str_replace("'", "", $changeUrlTemp);
             $changeUrlTemp = "'" . $changeUrlTemp;
             $urlQueryTemp = $query . "'";
 
-            //foreach($things as $test){echo($test);}
             if ($things) {
-                //echo("cpu true");
                 $name = $things['name'];
                 $url = $things['url'];
                 $price = $things['price'];
@@ -280,7 +272,7 @@ try {
             if (isset($query)) {
                 echo ('<td><button onclick = "location.href=' . $changeUrlTemp . $urlQueryTemp . '" class="btn btn-outline-primary">変更</button></td>');
             } else {
-                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php" class="btn btn-outline-primary">変更</button></td>');
+                echo ('<td><button onclick = "location.href=\'parts.php?genre=' . $genre_arr[$i] ."&". '" class="btn btn-outline-primary">変更</button></td>');
             }
             echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
             echo ('<td id="' . $genre_arr[$i] . 'name"><a href =' . $url . ' target="_blank" rel="noopener noreferrer">' . $name . '</td>');
@@ -291,9 +283,9 @@ try {
             echo ('<tr class = "' . $genre_arr[$i] . '">');
             echo ('<td id=genre>' . $genre_name_arr[$i] . '</td>');
             if (isset($query)) {
-                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php?' . $query . '\'" class="btn btn-outline-primary">変更</button></td>');
+                echo ('<td><button onclick = "location.href=\'parts.php?genre=' . $genre_arr[$i] ."&". $query . '\'" class="btn btn-outline-primary">変更</button></td>');
             } else {
-                echo ('<td><button onclick = "location.href=\'' . $genre_arr[$i] . '.php\'" class="btn btn-outline-primary">変更</button></td>');
+                echo ('<td><button onclick = "location.href=\'parts.php?genre=' . $genre_arr[$i] . '\'" class="btn btn-outline-primary">変更</button></td>');
             }
             echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
             echo ('<td id="' . $genre_arr[$i] . 'name"><a href = ></td>');
