@@ -65,6 +65,7 @@ header('Content-Type: text/html; charset=utf-8');
         DOM;
         echo($dom);
       }
+      echo('<p>↓表示されない等おかしくなったら押してください</p><button type="button" class="reset btn btn-outline-primary">リセット</button>');
 
       $a = 0;
       if($genre==="ssd2"){$genre_encoded="ssd";}else{$genre_encoded=$genre;}

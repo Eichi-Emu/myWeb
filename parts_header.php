@@ -36,7 +36,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "インテル": function(e, n, f, i, \$r, c, data) {
@@ -164,7 +164,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ADATA":function(e, n, f, i, \$r, c, data) { return /ADATA/.test(e); },
@@ -288,6 +288,7 @@ function parts_header($genre)
                   </div>
                   <br>
                   <h5>青い項目部分をタップorクリックで並べ替えができます。</h5>
+                  <br>
                   <table align="center" border="1" cellpadding="5" class="order-table" id="main-table" >
                     <thead>
                       <tr>
@@ -337,7 +338,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
@@ -690,7 +691,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ASUS": function(e, n, f, i, \$r, c, data) {
@@ -964,7 +965,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ASUS": function(e, n, f, i, \$r, c, data) {
@@ -1269,7 +1270,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
@@ -1426,7 +1427,7 @@ function parts_header($genre)
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>SSD2</title>
+            <title>サブSSD</title>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
@@ -1453,7 +1454,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
@@ -1636,7 +1637,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "HGST": function(e, n, f, i, \$r, c, data) {
@@ -1756,7 +1757,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "ADATA": function(e, n, f, i, \$r, c, data) {
@@ -1956,7 +1957,7 @@ function parts_header($genre)
                     filter_ignoreCase: true, //大文字小文字の区別
                     filter_saveFilters: true, //フィルタ情報の保存
                     filter_searchDelay: 300, //サーチかけるまでのディレイ
-          
+                    filter_reset : 'button.reset',
                     filter_functions: {
                       1: {
                         "Abee": function(e, n, f, i, \$r, c, data) {
@@ -2127,7 +2128,7 @@ function parts_header($genre)
               filter_ignoreCase: true, //大文字小文字の区別
               filter_saveFilters: true, //フィルタ情報の保存
               filter_searchDelay: 300, //サーチかけるまでのディレイ
-      
+              filter_reset : 'button.reset',
               filter_functions: {   
                 }
               }

@@ -327,10 +327,10 @@ try {
                 singlePartPrice = singlePartPrice.replace(" ", "");
                 singlePartPrice = Number(singlePartPrice);
                 partValue = Number($('#select-' + i).val());
-                console.log("partvalue-" + partValue);
+                //console.log("partvalue-" + partValue);
                 totalPartPrice = singlePartPrice * partValue;
 
-                console.log(totalPartPrice);
+                //console.log(totalPartPrice);
                 partsValue = " x" + partValue + "  ¥" + totalPartPrice.toLocaleString() + "\n";
                 configuration_content += partsValue;
             }
@@ -363,7 +363,7 @@ try {
 
                 if (i === 0) {
                     total = 0;
-                    console.log("initialization");
+                    //console.log("initialization");
                 };
 
                 //各種値取得(上が小計、下個数)
@@ -384,9 +384,9 @@ try {
                 Fprice = Fprice.replace(" ", "");
                 Fprice = Number(Fprice);
                 Ptotal = Fprice * Number(sum);
-                console.log(content + " selector:" + selector);
-                console.log("Fprice:" + typeof Fprice);
-                console.log(genre[i], Fprice, Ptotal, Number(sum)); //デバッグ
+                //console.log(content + " selector:" + selector);
+                //console.log("Fprice:" + typeof Fprice);
+                //console.log(genre[i], Fprice, Ptotal, Number(sum)); //デバッグ
 
                 total += Ptotal; //合計計算用　あとでつかう
                 temp2 = "¥" + Ptotal.toLocaleString(); //書式直し
