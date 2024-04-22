@@ -409,7 +409,7 @@ try {
     </table>
     <br>
     <div style="text-align: center;">
-        <textarea readonly rows="15" cols="100" id="configurationForm" style=""></textarea>
+        <textarea readonly rows="15" cols="100" id="configurationForm"></textarea>
         <button id="configCopy" class="configCopy">構成内容コピー</button>
     </div>
     <div class="about">
