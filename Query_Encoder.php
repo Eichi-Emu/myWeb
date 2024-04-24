@@ -42,7 +42,7 @@ class Query_Encoder{
             
             foreach(self::$parts_genre as &$genre){
                 if(array_key_exists($genre,$query)){
-                    $output+=$query[$genre]."-".$pcs[$n]."_";
+                    $output+=(($query[$genre])+1)."-".$pcs[$n]."_";
                 }
                 else{
                     $output+="0-".$pcs[$n]."_";
@@ -59,7 +59,7 @@ class Query_Encoder{
         $n=0;
         $output_array = self::$parts_array;
 
-        if(array_key_exists($query,self::$parts_genre)){
+        if(!array_key_exists($query,self::$parts_genre)){
             foreach(self::$parts_genre as &$genre){ 
                 $output_array = $query[$genre];
 
