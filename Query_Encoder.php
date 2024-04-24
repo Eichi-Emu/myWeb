@@ -26,6 +26,11 @@ class Query_Encoder{
         return $this -> query_decoder($new_query);
     }
 
+    public function add_query($select_query,$query_id)
+    {
+
+    }
+
     private function query_encoder($query,$pcs){
         $output = "";
         $n=0;
@@ -35,7 +40,7 @@ class Query_Encoder{
                 $pcs = [1,1,1,1,1,1,1,1,1,1,1];
             }
             
-            foreach(this::$parts_genre as &$genre){
+            foreach(self::$parts_genre as &$genre){
                 if(array_key_exists($genre,$query)){
                     $output+=$query[$genre]."-".$pcs[$n]."_";
                 }
@@ -51,11 +56,12 @@ class Query_Encoder{
 
     private function query_decoder($query){
 
+        $n=0;
+        $output_array = self::$parts_array;
 
-            if(array_key_exists($query,this::$parts_genre)){
-
-            foreach(this::$parts_genre as &$genre){
-                
+        if(array_key_exists($query,self::$parts_genre)){
+            foreach(self::$parts_genre as &$genre){ 
+                $output_array = $query[$genre];
 
             }
         }
