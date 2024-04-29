@@ -84,6 +84,14 @@ class Query_Encoder{
         }
     }
 
+    private function query_editor($encoded_query,$parts_genre,$parts_id=0)
+    {
+        $decoded_query=$this -> query_decoder($encoded_query);
+        $parts_array = $decoded_query[0];
+        $parts_pcs=$decoded_query[1];
+
+        
+    }
 }
 
 ?>
