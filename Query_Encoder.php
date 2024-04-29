@@ -1,19 +1,20 @@
 <? 
 class Query_Encoder{
 
-    private static $parts_genre = ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
+    private static $parts_genre = 
+    ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
     private static $parts_array = array(
-        "cpu" =>array(0,0),
-        "cpuc" =>array(0,0),
-        "ram" =>array(0,0),
-        "mb" =>array(0,0),
-        "gpu" =>array(0,0),
-        "ssd" =>array(0,0),
-        "ssd2" =>array(0,0),
-        "hdd" =>array(0,0),
-        "psu" =>array(0,0),
-        "pccase" =>array(0,0),
-        "os" =>array(0,0)
+        "cpu"       =>0,
+        "cpuc"      =>0,
+        "ram"       =>0,
+        "mb"        =>0,
+        "gpu"       =>0,
+        "ssd"       =>0,
+        "ssd2"      =>0,
+        "hdd"       =>0,
+        "psu"       =>0,
+        "pccase"    =>0,
+        "os"        =>0
     );
 
     public function encode($old_query,$pcs)
@@ -39,13 +40,16 @@ class Query_Encoder{
             if(!$pcs){
                 $pcs = [1,1,1,1,1,1,1,1,1,1,1];
             }
-            
+            if(array_key_exists("genre",$query)){
+                unset($query["genre"]);
+            }
+
             foreach(self::$parts_genre as &$genre){
                 if(array_key_exists($genre,$query)){
-                    $output+=(($query[$genre])+1)."-".$pcs[$n]."_";
+                    $output+=(($query[$genre])+1)."_".$pcs[$n]."|";
                 }
                 else{
-                    $output+="0-".$pcs[$n]."_";
+                    $output+="0_".$pcs[$n]."|";
                 }
             $n++;
             }
@@ -57,18 +61,29 @@ class Query_Encoder{
     private function query_decoder($query){
 
         $n=0;
-        $output_array = self::$parts_array;
+        $output_query = self::$parts_array;
+        $genre_pcs = [1,1,1,1,1,1,1,1,1,1,1];
 
-        if(!array_key_exists($query,self::$parts_genre)){
-            foreach(self::$parts_genre as &$genre){ 
-                $output_array = $query[$genre];
+        if(array_key_exists("query",$query)){
+            $query_text = $query["query"];
+            $split_query_text = explode("|",$query_text);
 
+            foreach($split_query_text as &$split){
+                $id_pcs_split = explode("_",$split);
+                $genre_pcs[$n] = intval($id_pcs_split[1]);
+                $output_query[$n] = intval($$id_pcs_split[0]);
+                $n++;
             }
+            $string_genre_pcs = strval($genre_pcs);
+            echo "<script>console.log('.json_encode(outQ={$output_query},outPCS={$string_genre_pcs})');</script>";
+            return [$output_query,$genre_pcs];
+        }
+        else
+        {
+            return [$query,$genre_pcs];
         }
     }
 
 }
-
-
 
 ?>
