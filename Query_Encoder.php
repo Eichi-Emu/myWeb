@@ -27,9 +27,9 @@ class Query_Encoder{
         return $this -> query_decoder($new_query);
     }
 
-    public function add_query($select_query,$query_id)
+    public function add_query($input_query,$select_query,$query_id=0,$query_pcs=1)
     {
-
+        return $this -> query_editor($input_query,$select_query,$query_id,$query_pcs);
     }
 
     private function query_encoder($query,$pcs){
@@ -71,7 +71,7 @@ class Query_Encoder{
             foreach($split_query_text as &$split){
                 $id_pcs_split = explode("_",$split);
                 $genre_pcs[$n] = intval($id_pcs_split[1]);
-                $output_query[$n] = intval($$id_pcs_split[0]);
+                $output_query[$n] = intval($$id_pcs_split[0])-1;
                 $n++;
             }
             $string_genre_pcs = strval($genre_pcs);
@@ -84,13 +84,27 @@ class Query_Encoder{
         }
     }
 
-    private function query_editor($encoded_query,$parts_genre,$parts_id=0)
+    /*
+    query_editor
+
+    input 
+    str encoded_query,parts_genre
+    int input_parts_id,input_parts_pcs
+
+    output
+    str encoded_query
+    */
+    private function query_editor($encoded_query,$parts_genre,$input_parts_id=0,$input_parts_pcs = 1)
     {
         $decoded_query=$this -> query_decoder($encoded_query);
         $parts_array = $decoded_query[0];
         $parts_pcs=$decoded_query[1];
 
-        
+        $parts_array[$parts_genre] = $input_parts_id;
+        $parts_pcs[array_search($parts_genre,self::$parts_genre)] = $input_parts_pcs;
+
+        $output = $this -> query_encoder($parts_array,$parts_pcs);
+        return $output;
     }
 }
 
