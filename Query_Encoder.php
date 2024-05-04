@@ -17,7 +17,9 @@ class Query_Encoder{
         "os"        =>0
     );
 
-    public function encode($old_query,$pcs)
+    private static $default_pcs = [1,1,1,1,1,1,1,1,1,1,1];
+
+    public function encode($old_query,$pcs=0)
     {
         return $this -> query_encoder($old_query,$pcs);
     }
@@ -33,11 +35,18 @@ class Query_Encoder{
     }
 
     private function query_encoder($query,$pcs){
+        //in=array query,array pcs. out=str output.
+        echo("<br>");
+        var_dump($query);
+        echo("<br>");
+        var_dump($pcs);
+        echo("<br>");
+
         $output = "";
         $n=0;
         if($query){
 
-            if(!$pcs){
+            if($pcs===0){
                 $pcs = [1,1,1,1,1,1,1,1,1,1,1];
             }
             if(array_key_exists("genre",$query)){
@@ -46,23 +55,35 @@ class Query_Encoder{
 
             foreach(self::$parts_genre as &$genre){
                 if(array_key_exists($genre,$query)){
-                    $output+=(($query[$genre])+1)."_".$pcs[$n]."|";
+                    $output= $output . (intval($query[$genre])+1)."_".$pcs[$n]."|";
                 }
                 else{
-                    $output+="0_".$pcs[$n]."|";
+                    $output= $output . "0_".$pcs[$n]."|";
                 }
             $n++;
             }
+            $output = rtrim($output,"|");
     }        
         echo "<script>console.log('.json_encode({$output})');</script>";
         return $output;
     }
 
     private function query_decoder($query){
+        //input= str query[ex. query=22_1|20_...] output= array[1->query 2->pcs]
+        if(!is_array($query))
+        {
+            try{
+                parse_str($query,$query);
+            }catch (Exception $ex)
+            {
+                return $ex;
+            }
+        }
 
         $n=0;
         $output_query = self::$parts_array;
         $genre_pcs = [1,1,1,1,1,1,1,1,1,1,1];
+        $genre = self::$parts_genre;
 
         if(array_key_exists("query",$query)){
             $query_text = $query["query"];
@@ -71,7 +92,7 @@ class Query_Encoder{
             foreach($split_query_text as &$split){
                 $id_pcs_split = explode("_",$split);
                 $genre_pcs[$n] = intval($id_pcs_split[1]);
-                $output_query[$n] = intval($$id_pcs_split[0])-1;
+                $output_query[$genre[$n]] = intval($id_pcs_split[0])-1;
                 $n++;
             }
             $string_genre_pcs = strval($genre_pcs);
@@ -84,16 +105,6 @@ class Query_Encoder{
         }
     }
 
-    /*
-    query_editor
-
-    input 
-    str encoded_query,parts_genre
-    int input_parts_id,input_parts_pcs
-
-    output
-    str encoded_query
-    */
     private function query_editor($encoded_query,$parts_genre,$input_parts_id=0,$input_parts_pcs = 1)
     {
         $decoded_query=$this -> query_decoder($encoded_query);

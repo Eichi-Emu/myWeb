@@ -215,6 +215,34 @@ echo <<<default_str
                         color: #FFFC00;
                         box-shadow: none;
                     }
+                    .loginbtn{
+                        width:200px;
+                        height:50px;
+                        line-height:50px;
+                    }
+                    .loginbtn a{
+                        display:block;
+                        width:100%;
+                        height:100%;
+                        text-decoration: none;
+                        background:#29CF1C;
+                        text-align:center;
+                        color:#FFFFFF;
+                        font-size:20px;
+                        font-weight:bold;
+                        border-radius:10px;
+                        -webkit-border-radius:10px;
+                        -moz-border-radius:10px;
+                        box-shadow:5px 5px 0px 0px #DEDEDE ;
+                    }
+                    .loginbtn a:hover{
+                        background:#29CF1C;
+                        color:#FFFC00;
+                        margin-left:5px;
+                        margin-top:5px;
+                        box-shadow:none;
+                    }
+                    
                 </style>
             </head>
 
@@ -229,7 +257,7 @@ echo <<<default_str
                             <th id="button">ジャンル</th>
                             <th id="button">　　</th>
                             <th id="genre">　　</th>
-                            <th id="name">商品名</th>
+                            <th id="name" width=60%>商品名</th>
                             <th id="kakaku1">小計</th>
                             <th id="sum">個数</th>
                             <th id="kakaku2">合計</th>
@@ -429,6 +457,8 @@ try {
         匿名がいい人はこちらから。金額は適当にどうぞ。メアドは連絡先のを入れてください。<div class='donate'><a href='https://www.amazon.co.jp/dp/B004N3APGO/ref=s9_acsd_al_bw_c2_x_0_t?pf_rd_m=A3P5ROKL5A1OLE&pf_rd_s=merchandised-search-18&pf_rd_r=HTTTRCNAHN61DYE139T4&pf_rd_t=101&pf_rd_p=37ab5c0c-3d6f-4466-847b-03b0286ca49e&pf_rd_i=3131877051' target="_blank" rel="noopener noreferrer">おふせ(amazon)</a></div><br>
 
         google ADの認可おりね～～～～～(ADつけるかもしれんし付けんかもしれん(めんどいし))<br><br><br>
+
+        特定の方向け↓<div class='loginbtn'><a href='profile/profile_login.php'target="_blank" rel="noopener noreferrer">ログイン</a></div>
     </div>
 
     <div class="notification">
