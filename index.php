@@ -1,20 +1,29 @@
 <?php
-require("log.php");
-$log = Logger::getInstance();
-$log->error('error log.');
-$log->warn('warn log.');
-$log->info('info log.');
-$log->debug('debug log.');
+include "Query_Encoder.php";
 try {
     $db = new PDO('mysql:host=localhost;dbname=kakaku;charset=utf8', 'user', 'xX114514');
     //echo "接続OK！";
 } catch (PDOException $e) {
     echo 'このメッセージが見えてしまったそこの貴方、こちらへ連絡を→twitter:@emu_eichi' . $e->getMessage();
 }
+//isset($_GET["cpu"]) or isset($_GET["cpuc"]) or isset($_GET["ram"]) or isset($_GET["mb"]) or isset($_GET["gpu"]) or isset($_GET["ssd"]) or isset($_GET["ssd2"])or isset($_GET["hdd"]) or isset($_GET["psu"]) or isset($_GET["pccase"]) or isset($_GET["os"])
 
-?>
-<?php
-function url_param_change($par = array(), $op = 0)
+$encoding = new Query_Encoder;
+if(strpos($_SERVER['REQUEST_URI'],"?") === false)//!isset($_GET["query"]) or ?query=0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1
+{
+    echo "true";
+    //$encoded_query = $encoding -> encode(http_build_query($_GET),0);
+    //header("Location:". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']."query=". $encoded_query);
+    //header("Location:index.php?query=0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1");
+}
+else{
+    echo("False");
+}
+//elseif(!isset($_GET["query"]) or empty(http_build_query($_GET))){
+//    header("Location:index.php?query=0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1");//"?query=0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1
+//}
+
+/*function url_param_change($par = array(), $op = 0)
 {
     $url = parse_url($_SERVER["REQUEST_URI"]);
     if (isset($url["query"]))
@@ -30,15 +39,17 @@ function url_param_change($par = array(), $op = 0)
     $query = str_replace("=&", "&", http_build_query($query));
     $query = preg_replace("/=$/", "", $query);
     return $query ? (!$op ? "?" : "") . htmlspecialchars($query, ENT_QUOTES) : "";
-}
-
+}*/
 function delete_query($genre)
 {
-    $do = url_param_change(array($genre => null));
-    $return = 'location.href=\'index.php' . $do . '\'';
+    $enc = new Query_Encoder;
+    //$testclass = new testclass;
+    //$return = $testclass -> test();
+    $do = $enc -> edit_query(http_build_query($_GET),$genre); //return str(ex.??_??|??_??|...)
+    //$do = url_param_change(array($genre => null));
+    $return = 'location.href=\'index.php?query=' . $do . '\'';
     return $return;
 }
-
 $genre_arr = array('cpu', 'cpuc', 'ram', 'mb', 'gpu', 'ssd', 'ssd2', 'hdd', 'psu', 'pccase', 'os');
 $genre_name_arr = array('CPU', 'CPUクーラー', 'メモリ', 'マザー', 'GPU', 'メインSSD', 'サブSSD', 'HDD', '電源', 'ケース', 'OS');
 $allUrl = $_SERVER['REQUEST_URI'];
@@ -50,10 +61,19 @@ if (strpos($allUrl, "?")) {
     $temp = explode("?", $allUrl);
     $query = $temp[1];
 }
+if(isset($_GET["query"])){
+    $decoded_query = $encoding -> decode($_GET["query"]);
+}else
+{
+    $decoded_query = $encoding -> decode("0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1");
+}
+$decoded_query = $encoding -> decode($_GET["query"]);
+$decoded_id = $decoded_query[0];
+$decoded_pcs = $decoded_query[1];
+
 for ($i = 0; $i < count($genre_arr); $i++) {
 
-
-    if (isset($_GET[$genre_arr[$i]])) {
+    if ($decoded_id[$genre_arr[$i]] !== -1) {/*ここはジャンルごとの判定をする場所なのでquery入れないでデコードした変数をいれるべき */
         $header_flag = true;
         $name = NULL;
         $url = NULL;
@@ -268,7 +288,7 @@ echo <<<default_str
 
 try {
     for ($i = 0; $i < count($genre_arr); $i++) {
-        if (isset($_GET[$genre_arr[$i]])) {
+        if ($decoded_id[$genre_arr[$i]] !== -1) {
             $name = NULL;
             $url = NULL;
             $price = NULL;
@@ -433,6 +453,7 @@ try {
 <tr>
     <td colspan=6>合計金額</td>
     <td id="totalMoney" class="price"></td>
+</tr>
     </tbody>
     </table>
     <br>

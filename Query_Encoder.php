@@ -1,6 +1,6 @@
-<? 
+<?php 
+echo "init.";
 class Query_Encoder{
-
     private static $parts_genre = 
     ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
     private static $parts_array = array(
@@ -21,31 +21,32 @@ class Query_Encoder{
 
     public function encode($old_query,$pcs=0)
     {
-        return $this -> query_encoder($old_query,$pcs);
+        return $this -> query_encode($old_query,$pcs);
     }
 
     public function decode($new_query)
     {
-        return $this -> query_decoder($new_query);
+        return $this -> query_decode($new_query);
     }
 
-    public function add_query($input_query,$select_query,$query_id=0,$query_pcs=1)
+    public function edit_query($input_query,$select_query,$query_id=0,$query_pcs=1)
     {
         return $this -> query_editor($input_query,$select_query,$query_id,$query_pcs);
     }
 
-    private function query_encoder($query,$pcs){
+    private function query_encode($query,$pcs){
         //in=array query,array pcs. out=str output.
-        echo("<br>");
-        var_dump($query);
-        echo("<br>");
-        var_dump($pcs);
-        echo("<br>");
+        //echo("<br>");
+        //var_dump($query);
+        //echo("<br>");
+        //var_dump($pcs);
+        //echo("<br>");
 
         $output = "";
         $n=0;
         if($query){
-
+            parse_str($query,$query);
+            var_dump ($query);
             if($pcs===0){
                 $pcs = [1,1,1,1,1,1,1,1,1,1,1];
             }
@@ -64,11 +65,11 @@ class Query_Encoder{
             }
             $output = rtrim($output,"|");
     }        
-        echo "<script>console.log('.json_encode({$output})');</script>";
+        //echo "<script>console.log('.json_encode({$output})');</script>";
         return $output;
     }
 
-    private function query_decoder($query){
+    private function query_decode($query){
         //input= str query[ex. query=22_1|20_...] output= array[1->query 2->pcs]
         if(!is_array($query))
         {
@@ -96,7 +97,7 @@ class Query_Encoder{
                 $n++;
             }
             $string_genre_pcs = strval($genre_pcs);
-            echo "<script>console.log('.json_encode(outQ={$output_query},outPCS={$string_genre_pcs})');</script>";
+            //echo "<script>console.log('.json_encode(outQ={$output_query},outPCS={$string_genre_pcs})');</script>";
             return [$output_query,$genre_pcs];
         }
         else
@@ -105,18 +106,18 @@ class Query_Encoder{
         }
     }
 
-    private function query_editor($encoded_query,$parts_genre,$input_parts_id=0,$input_parts_pcs = 1)
+    private function query_editor($encoded_query,$parts_genre,$input_parts_id=0,$input_parts_pcs = 1) 
+    //in:Str encoded_query(ex,??_??|??_??|),Str genre(ex.cpu cpuc...),int ID,intPCS
     {
-        $decoded_query=$this -> query_decoder($encoded_query);
+        $decoded_query=$this -> query_decode($encoded_query);
         $parts_array = $decoded_query[0];
         $parts_pcs=$decoded_query[1];
 
         $parts_array[$parts_genre] = $input_parts_id;
         $parts_pcs[array_search($parts_genre,self::$parts_genre)] = $input_parts_pcs;
 
-        $output = $this -> query_encoder($parts_array,$parts_pcs);
+        $output = $this -> query_encode($parts_array,$parts_pcs);
         return $output;
     }
 }
-
 ?>

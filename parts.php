@@ -21,7 +21,9 @@ header('Content-Type: text/html; charset=utf-8');
   ?>
 
     <?php
-      function url_param_change($par = array(), $op = 0)
+
+      require("Query_Encoder.php");
+      /*function url_param_change($par = array(), $op = 0)
       {
         $url = parse_url($_SERVER["REQUEST_URI"]);
         if (isset($url["query"])) parse_str($url["query"], $query);
@@ -34,12 +36,15 @@ header('Content-Type: text/html; charset=utf-8');
         $query = str_replace("=&", "&", http_build_query($query));
         $query = preg_replace("/=$/", "", $query);
         return $query ? (!$op ? "?" : "") . htmlspecialchars($query, ENT_QUOTES) : "";
-      }
+      }*/
+
       function urlCustom($id)
       {
+        $encoder = new Query_Encoder;
         $return = NULL;
-        $do = url_param_change(array($_GET['genre'] => $id));
-        $return = 'location.href=\'index.php' . $do . '\'';
+        $do = $encoder -> edit_query($_GET["query"],$_GET["genre"],$id) ;
+        //$do = url_param_change(array($_GET['genre'] => $id));
+        $return = 'location.href=\'index.php?query=' . $do . '\'';
         return $return;
       }
 
