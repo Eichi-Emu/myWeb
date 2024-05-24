@@ -1,0 +1,18 @@
+$font-family-sans-serif: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+
+$primary:       #1F5ADF;
+$secondary:     #C6C214;
+$success:       #198754;
+$info:          #0dcaf0;
+$warning:       #ffc107;
+$danger:        #dc3545;
+$light:         #f8f9fa;
+$dark:          #212529;
+$darker:          #0A1E4A;
+
+$body-bg:       #0A1E4A;
+$body-color:    #f8f9fa;
+$link-color:    #0dcaf0;
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
