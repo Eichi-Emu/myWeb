@@ -11,12 +11,18 @@ try {
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]
   );
+<<<<<<< HEAD
 
+=======
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
 } catch (PDOException $e) {
 
   header('Content-Type: text/plain; charset=UTF-8', true, 500);
   exit($e->getMessage());
+<<<<<<< HEAD
 
+=======
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
 }
 
 
@@ -32,12 +38,18 @@ try {
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]
   );
+<<<<<<< HEAD
 
+=======
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
 } catch (PDOException $e) {
 
   header('Content-Type: text/plain; charset=UTF-8', true, 500);
   exit($e->getMessage());
+<<<<<<< HEAD
 
+=======
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
 }
 
 header('Content-Type: text/html; charset=utf-8');
@@ -52,6 +64,7 @@ header('Content-Type: text/html; charset=utf-8');
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>cpu</title>
+<<<<<<< HEAD
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -60,6 +73,13 @@ header('Content-Type: text/html; charset=utf-8');
   <script src="https://cdn.jsdelivr.net/gh/DeuxHuitHuit/quicksearch/dist/jquery.quicksearch.min.js"></script>
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css">
+=======
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/DeuxHuitHuit/quicksearch/dist/jquery.quicksearch.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css">
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
 
   <style>
     #main-table th {
@@ -71,7 +91,11 @@ header('Content-Type: text/html; charset=utf-8');
     }
   </style>
   <script>
+<<<<<<< HEAD
     $(document).ready(function () {
+=======
+    $(document).ready(function() {
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
       $('#main-table').tablesorter();
     });
     /*jQuery(function ($) {
@@ -127,12 +151,16 @@ header('Content-Type: text/html; charset=utf-8');
       });
     
     });*/
-    jQuery(function ($) {
+    jQuery(function($) {
       $('input#id_search').quicksearch('table tbody tr');
       var filters = {}; // 空のフィルターのオブジェクトを初期化
 
       // 各メニューの変更イベントを処理する
+<<<<<<< HEAD
       $('.form-control').change(function () {
+=======
+      $('.form-control').change(function() {
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
         var filter_id = $(this).attr('id'); // メニューのIDを取得
         var filter_val = $(this).val(); // 選択された値を取得
 
@@ -144,11 +172,19 @@ header('Content-Type: text/html; charset=utf-8');
         }
 
         // 各行をチェックして、表示または非表示を設定する
+<<<<<<< HEAD
         $("#main-table tbody tr").each(function (index, element) {
           var row_text = $(element).text();
           var visible = true;
 
           $.each(filters, function (key, val) {
+=======
+        $("#main-table tbody tr").each(function(index, element) {
+          var row_text = $(element).text();
+          var visible = true;
+
+          $.each(filters, function(key, val) {
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
             if (row_text.indexOf(val) == -1) {
               visible = false;
             }
@@ -195,6 +231,10 @@ header('Content-Type: text/html; charset=utf-8');
         <option value="Socket TR4">Socket TR4</option>
         <option value="Socket sTRX4">Socket sTRX4</option>
         <option value="Socket sWRX8">Socket sWRX8</option>
+<<<<<<< HEAD
+=======
+        <option value="Socket sTR5">Socket sTR5</option>
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
       </select>
       <select id="select-3" class="form-control">
         <option value="">グレード</option>
@@ -234,6 +274,7 @@ header('Content-Type: text/html; charset=utf-8');
       function url_param_change($par = array(), $op = 0)
       {
         $url = parse_url($_SERVER["REQUEST_URI"]);
+<<<<<<< HEAD
         if (isset($url["query"]))
           parse_str($url["query"], $query);
         else
@@ -243,6 +284,13 @@ header('Content-Type: text/html; charset=utf-8');
             unset($query[$key]);
           else
             $query[$key] = $value;
+=======
+        if (isset($url["query"])) parse_str($url["query"], $query);
+        else $query = array();
+        foreach ($par as $key => $value) {
+          if ($key && is_null($value)) unset($query[$key]);
+          else $query[$key] = $value;
+>>>>>>> a74cadf9a59c456594233d3d457d369800047384
         }
         $query = str_replace("=&", "&", http_build_query($query));
         $query = preg_replace("/=$/", "", $query);
