@@ -1021,10 +1021,10 @@ class dosomething:
         #'''
         try:
             connection = mysql.connector.connect(
-                host="localhost",
-                user="eichiemuDB",
-                password="RWiuqO1hZm4V3nFmz7TF",
-                db="kakaku"
+                host="",
+                user="",
+                password="",
+                db=""
             )
 
             if connection.is_connected:
