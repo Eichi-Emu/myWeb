@@ -1,5 +1,4 @@
 <?php 
-echo "init.";
 class Query_Encoder{
     private static $parts_genre = 
     ["cpu", "cpuc", "ram", "mb", "gpu", "ssd", "ssd2", "hdd", "psu", "pccase", "os"];
@@ -36,8 +35,8 @@ class Query_Encoder{
 
     private function query_encode($query,$pcs){
         //in=array query,array pcs. out=str output.
-        //echo("<br>");
-        //var_dump($query);
+        echo("<br>Q_ENC-1st varDump:");
+        var_dump($query);
         //echo("<br>");
         //var_dump($pcs);
         //echo("<br>");
@@ -45,8 +44,10 @@ class Query_Encoder{
         $output = "";
         $n=0;
         if($query){
-            parse_str($query,$query);
-            var_dump ($query);
+
+            if(!is_array($query)){parse_str($query,$query);}
+
+            //var_dump ($query);
             if($pcs===0){
                 $pcs = [1,1,1,1,1,1,1,1,1,1,1];
             }

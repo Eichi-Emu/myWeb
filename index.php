@@ -59,18 +59,26 @@ $header_flag = false;
 
 if (strpos($allUrl, "?")) {
     $temp = explode("?", $allUrl);
-    $query = $temp[1];
+    $querytemp = $temp[1];
 }
 if(isset($_GET["query"])){
     $decoded_query = $encoding -> decode($_GET["query"]);
 }else
 {
+    echo"GET is false";
     $decoded_query = $encoding -> decode("0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1|0_1");
 }
 $decoded_query = $encoding -> decode($_GET["query"]);
+echo("index-DdQu:");
+var_dump($decoded_query);
+echo "<br>";
 $decoded_id = $decoded_query[0];
 $decoded_pcs = $decoded_query[1];
 
+echo("index-DdID:");
+var_dump($decoded_id);
+echo "<br>"."index-DdPCs:";
+var_dump($decoded_pcs);
 for ($i = 0; $i < count($genre_arr); $i++) {
 
     if ($decoded_id[$genre_arr[$i]] !== -1) {/*ここはジャンルごとの判定をする場所なのでquery入れないでデコードした変数をいれるべき */
@@ -335,7 +343,7 @@ try {
             } else {
                 echo ('<td><button onclick = "location.href=\'parts.php?genre=' . $genre_arr[$i] . '\'" class="btn btn-outline-primary">変更</button></td>');
             }
-            echo ('<td><button onclick = ' . delete_query($genre_arr[$i]) . ' class="btn btn-outline-primary">削除</button></td>');
+            echo ('<td><button onclick = ' . /*delete_query($genre_arr[$i]) .*/ ' class="btn btn-outline-primary">削除</button></td>');
             echo ('<td id="' . $genre_arr[$i] . 'name"><a href = ></td>');
             echo ('<td id="' . $genre_arr[$i] . 'price1" class="price">0</td>');
             echo ('<td id="' . $genre_arr[$i] . 'value" class="value"><select id="select-' . $i . '" class="form-control"><option value=1>1</option><option value=2>2</option></select></td>');
